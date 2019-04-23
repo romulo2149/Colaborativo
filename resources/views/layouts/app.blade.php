@@ -71,21 +71,21 @@
                             &nbsp
                             @else
                                     @if(Auth::user()->rol=='Freelancer')
-                                    <li><a class="badge1" data-badge="" href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>&nbsp; Bandeja</p></a></li>
+                                    <li><a id="chatFl" class="" data-badge="" href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>&nbsp; Bandeja</p></a></li>
                                     <li><a href="{{ route('buscarProyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp; Buscar Proyecto</p></a></li>
-                                    <li><a class="badge1" data-badge="" href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp; Mis Proyectos</p></a></li>
+                                    <li><a id="proyFl" class="" data-badge="" href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp; Mis Proyectos</p></a></li>
                                     @endif
 
                                     @if(Auth::user()->rol=='Cliente')
-                                    <li><a onclick="vistoMensaje()" id="chatCl" class="" data-badge="" href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>&nbsp; Bandeja</p></a></li>
+                                    <li><a id="chatCl" class="" data-badge="" href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>&nbsp; Bandeja</p></a></li>
                                     <li><a href="{{ route('vistaproyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>&nbsp; Subir Proyecto</p></a></li>
-                                    <li><a onclick="vistoProyecto()" id="proyCl" class="" data-badge="" href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; Mis Proyectos</p></a></li>
+                                    <li><a id="proyCl" class="" data-badge="" href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; Mis Proyectos</p></a></li>
                                     @endif
 
                                     @if(Auth::user()->rol=='Empresa')
-                                    <li><a class="badge1" data-badge="" href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>&nbsp; Bandeja</p></a></li>
+                                    <li><a class="" data-badge="" href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>&nbsp; Bandeja</p></a></li>
                                     <li><a href="{{ route('vistaproyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>&nbsp; Subir Proyecto</p></a></li>
-                                    <li><a class="badge1" data-badge="" href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Mis Proyectos</p></a></li>
+                                    <li><a class="" data-badge="" href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Mis Proyectos</p></a></li>
                                     @endif
                         @endguest
                     </ul>
@@ -149,16 +149,31 @@ ready(function(){
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
             var json = JSON.parse(this.responseText);
-            if(json["mensaje"] > 0)
-            {
-                document.getElementById("chatCl").setAttribute("class", "badge1");
-                document.getElementById("chatCl").setAttribute("data-badge", json["mensaje"]);
-            }
-            if(json["proyecto"] > 0)
-            {
-                document.getElementById("proyCl").setAttribute("class", "badge1");
-                document.getElementById("proyCl").setAttribute("data-badge", json["proyecto"]);
-            }
+            @if(Auth::user()->rol=='Freelancer')
+                if(json["mensaje"] > 0)
+                {
+                    document.getElementById("chatFl").setAttribute("class", "badge1");
+                    document.getElementById("chatFl").setAttribute("data-badge", json["mensaje"]);
+                }
+                if(json["proyecto"] > 0)
+                {
+                    document.getElementById("proyFl").setAttribute("class", "badge1");
+                    document.getElementById("proyFl").setAttribute("data-badge", json["proyecto"]);
+                }
+            @endif
+            @if(Auth::user()->rol=='Cliente')
+            
+                if(json["mensaje"] > 0)
+                {
+                    document.getElementById("chatCl").setAttribute("class", "badge1");
+                    document.getElementById("chatCl").setAttribute("data-badge", json["mensaje"]);
+                }
+                if(json["proyecto"] > 0)
+                {
+                    document.getElementById("proyCl").setAttribute("class", "badge1");
+                    document.getElementById("proyCl").setAttribute("data-badge", json["proyecto"]);
+                }
+            @endif
         }
     };
 
