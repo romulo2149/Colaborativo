@@ -80,7 +80,7 @@ class SolicitudController extends Controller
     {
         $contrato = new contrato;
         $id = Auth::user()->id;
-        $firma = DB::table('users')->select('*')->where([['id','=',$id],['firma','=', $request->firma_cliente]])->get();
+        $firma = DB::table('users')->select('*')->where([['id','=',$id],['firma_electronica','=', $request->firma_cliente]])->get();
         if(!$firma->isEmpty())
         {
             $contrato->solicitud = $request->solicitud;
@@ -118,7 +118,7 @@ class SolicitudController extends Controller
     public function trato(Request $request)
     {
         $id = Auth::user()->id;
-        $firma = DB::table('users')->select('*')->where([['id','=',$id],['firma','=', $request->firma_freelancer]])->get();
+        $firma = DB::table('users')->select('*')->where([['id','=',$id],['firma_electronica','=', $request->firma_freelancer]])->get();
         $proyecto = DB::table('solicitud')->select('*')->where('id_solicitud', $request->solicitud)->first();
         DB::table('solicitud')->where('id_proyecto',$proyecto->id_proyecto)->update(['estatus' => 'Rechazada']);
         DB::table('solicitud')->where('id_solicitud',$request->solicitud)->update(['estatus' => 'Aceptada']);

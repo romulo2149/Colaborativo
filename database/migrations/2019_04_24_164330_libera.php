@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Liberar extends Migration
+class Libera extends Migration
 {
     /**
      * Run the migrations.
@@ -18,6 +18,7 @@ class Liberar extends Migration
             $table->integer('id_user_liberado')->unsigned();
             $table->integer('id_user_libera')->unsigned();
             $table->integer('valoracion')->unsigned();
+            $table->integer('id_proyecto')->unsigned();
             $table->string('comentario');
             $table->timestamps();
         });

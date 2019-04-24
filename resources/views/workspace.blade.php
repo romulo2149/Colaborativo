@@ -111,9 +111,9 @@
                         <div class="panel-body">
                             <center>
                             <div class="form-group ">
-                                @if($f->image!=null)
+                                @if($f->profile_image!=null)
                                     <img class="imagenUsuario" style=" width:128px; height:128px; border-radius: 50%;"
-                                    src="{{ asset( 'uploads/'.$f->image)}}" alt="Imagen Usuario">                    
+                                    src="{{ asset( 'uploads/'.$f->profile_image)}}" alt="Imagen Usuario">                    
                                 @else
                                     <img class="imagenUsuario" style=" width:128px; height:128px; border-radius: 50%; " 
                                     src="{{ asset( 'img/default_user.png' )}}" alt="Imagen Usuario">
@@ -157,9 +157,9 @@
                         <div class="panel-body">
                             <center>
                             <div class="form-group ">
-                                @if($c->image!=null)
+                                @if($c->profile_image!=null)
                                     <img class="imagenUsuario" style=" width:128px; height:128px; border-radius: 50%;"
-                                    src="{{ asset( 'uploads/'.$c->image)}}" alt="Imagen Usuario">                    
+                                    src="{{ asset( 'uploads/'.$c->profile_image)}}" alt="Imagen Usuario">                    
                                 @else
                                     <img class="imagenUsuario" style=" width:128px; height:128px; border-radius: 50%; " 
                                     src="{{ asset( 'img/default_user.png' )}}" alt="Imagen Usuario">
@@ -203,9 +203,9 @@
                         <div class="panel-body">
                             <center>
                             <div class="form-group ">
-                                @if($f->image!=null)
+                                @if($f->profile_image!=null)
                                     <img class="imagenUsuario" style=" width:128px; height:128px; border-radius: 50%;"
-                                    src="{{ asset( 'uploads/'.$f->image)}}" alt="Imagen Usuario">                    
+                                    src="{{ asset( 'uploads/'.$f->profile_image)}}" alt="Imagen Usuario">                    
                                 @else
                                     <img class="imagenUsuario" style=" width:128px; height:128px; border-radius: 50%; " 
                                     src="{{ asset( 'img/default_user.png' )}}" alt="Imagen Usuario">
@@ -243,6 +243,24 @@
 @endforeach
 @endif
 
+<script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous">
+    </script>
+<script type="text/javascript"
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous">
+    </script>
+  <script src="{{ asset('public/js/app.js') }}"></script>
+    <script src="{{ asset('public/js/zxcvbn-bootstrap-strength-meter.js') }}"></script>
+    <script src="{{ asset('public/js/star-rating-show.js') }}"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+    integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" 
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>
+
 <script>
 function verPerfil(i)
 {
@@ -252,7 +270,7 @@ function verPerfil(i)
 
 function crearChat(i)
 {
-    document.getElementById("form"+i).action = "{{route('crearChat')}}";
+    document.getElementById("form"+i).action = "{{route('chat')}}";
     document.getElementById("form"+i).method = "post";
     document.getElementById("form"+i).submit();
 }

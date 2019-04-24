@@ -168,9 +168,9 @@ class ProyectoController extends Controller
         }
         $liberar = DB::table('liberar')->where('id_proyecto', $request->data)->get();
         $proyecto = DB::table('proyecto')->where('id_proyecto', $request->data)->get();
-        $cliente = DB::table('proyecto')->join('users', 'users.id', '=', 'proyecto.usuario')->select('users.id as id', 'users.name', 'users.image', 'users.email')->where('id_proyecto', $request->data)->get();
+        $cliente = DB::table('proyecto')->join('users', 'users.id', '=', 'proyecto.usuario')->select('users.id as id', 'users.name', 'users.profile_image', 'users.email')->where('id_proyecto', $request->data)->get();
         $solicitud = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->select('contrato.id_contrato','contrato.pago as pago', 'contrato.fecha_entrega as entrega', 'contrato.penalizacion as penalizacion', 'solicitud.id_solicitud')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
-        $freelancer = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.id as id','users.name', 'users.image', 'users.email')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
+        $freelancer = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.id as id','users.name', 'users.profile_image', 'users.email')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
         return view('workspace')->with(['liberar'=>$liberar,'estatus' => $estatus,'progreso'=>$progreso,'proyecto' => $proyecto, 'solicitud' => $solicitud, 'freelancer' => $freelancer, 'cliente' => $cliente]);
     }
 
@@ -182,9 +182,9 @@ class ProyectoController extends Controller
         $proyecto = DB::table('proyecto')->where('id_proyecto', $request->data)->get();
         $progreso = DB::table('progreso')->where('id_proyecto', $request->data)->get();
         $liberar = DB::table('liberar')->where('id_proyecto', $request->data)->get();
-        $cliente = DB::table('proyecto')->join('users', 'users.id', '=', 'proyecto.usuario')->select('users.id as id', 'users.name', 'users.image', 'users.email')->where('id_proyecto', $request->data)->get();
+        $cliente = DB::table('proyecto')->join('users', 'users.id', '=', 'proyecto.usuario')->select('users.id as id', 'users.name', 'users.profile_image', 'users.email')->where('id_proyecto', $request->data)->get();
         $solicitud = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->select('contrato.id_contrato','contrato.pago as pago', 'contrato.fecha_entrega as entrega', 'contrato.penalizacion as penalizacion', 'solicitud.id_solicitud')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
-        $freelancer = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.id as id','users.name', 'users.image', 'users.email')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
+        $freelancer = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.id as id','users.name', 'users.profile_image', 'users.email')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
         return back()->with(['liberar'=>$liberar,'progreso'=>$progreso,'proyecto' => $proyecto, 'solicitud' => $solicitud, 'freelancer' => $freelancer, 'cliente' => $cliente]);
     }
 
@@ -199,14 +199,14 @@ class ProyectoController extends Controller
         $liberar->save();
         $conteo = DB::table('liberar')->where('id_user_liberado', $request->id_freelancer)->count();
         $sum = DB::table('liberar')->where('id_user_liberado', $request->id_freelancer)->sum('valoracion');
-        DB::table('users')->where('id', $request->id_freelancer)->update(['valoracion' => $sum/$conteo]);
+        DB::table('users')->where('id', $request->id_freelancer)->update(['rating' => $sum/$conteo]);
         $estatus = 0;
         $liberar = DB::table('liberar')->where('id_proyecto', $request->data)->get();
         $proyecto = DB::table('proyecto')->where('id_proyecto', $request->data)->get();
         $progreso = DB::table('progreso')->where('id_proyecto', $request->data)->get();
-        $cliente = DB::table('proyecto')->join('users', 'users.id', '=', 'proyecto.usuario')->select('users.id as id', 'users.name', 'users.image', 'users.email')->where('id_proyecto', $request->data)->get();
+        $cliente = DB::table('proyecto')->join('users', 'users.id', '=', 'proyecto.usuario')->select('users.id as id', 'users.name', 'users.profile_image', 'users.email')->where('id_proyecto', $request->data)->get();
         $solicitud = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->select('contrato.id_contrato','contrato.pago as pago', 'contrato.fecha_entrega as entrega', 'contrato.penalizacion as penalizacion', 'solicitud.id_solicitud')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
-        $freelancer = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.id as id','users.name', 'users.image', 'users.email')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
+        $freelancer = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.id as id','users.name', 'users.profile_image', 'users.email')->where([['id_proyecto', '=', $request->data],['estatus', '=', 'Aceptada']])->get();
         return back()->with(['liberar'=>$liberar,'estatus' => $estatus,'progreso'=>$progreso,'proyecto' => $proyecto, 'solicitud' => $solicitud, 'freelancer' => $freelancer, 'cliente' => $cliente]);
     }
 }
